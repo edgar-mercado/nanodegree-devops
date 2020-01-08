@@ -333,7 +333,7 @@ Resources:
       Metadata:
         AWS::CloudFormation::Init:
           configSets:
-            full_install: [install_cfn, install_app, verify_instance_health]
+            full_install: [install_cfn]
           install_cfn:
             files:
               /etc/cfn/cfn-hup.conf:
