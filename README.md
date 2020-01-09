@@ -14,6 +14,10 @@ This cloudFormation stack will deploy the following resources:
 - One AutoScalingGroup configuration
 - One Internet Gateway
 - Two NATs, one on each public subnet
+- Two Elastic IPs
+- Three SecurityGroups for the ALB, WebServer and Bastion
+- One IAM role
+
 
 Architecture diagram
 ![Architecture](project2/doc/diagram.png)
