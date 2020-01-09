@@ -365,12 +365,11 @@ Resources:
         IamInstanceProfile: !Ref ProfileWithRolesForOurApp
         SecurityGroups:
         - !Ref EC2SG
-        InstanceType: t2.medium
+        InstanceType: t3.small
         BlockDeviceMappings:
         - DeviceName: "/dev/sdk"
           Ebs:
             VolumeSize: '10'
-        KeyName: !Ref KeyName
         UserData:
           Fn::Base64:
             !Sub |
