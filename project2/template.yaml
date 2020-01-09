@@ -382,9 +382,12 @@ Resources:
                 cd /var/www/html
                 aws s3 cp s3://udacity-demo-1/udacity.zip .
                 unzip -o udacity.zip
-                apt-get install heat-cfntools -y
-                cfn-init -v --stack ${AWS::StackId} --resource WebAppLaunchConfig --configsets full_install --region ${AWS::Region}
-                cfn-signal -e $? --stack ${AWS::StackId} --resource WebServerGroup --region ${AWS::Region}
+                apt-get install -y python-setuptools
+                mkdir -p /opt/aws/bin
+                wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+                python /usr/lib/python2.7/dist-packages/easy_install.py easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
+                /opt/aws/bin/cfn-init -v --stack ${AWS::StackId} --resource WebServerGroup --configsets full_install --region ${AWS::Region}
+                /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackId} --resource WebServerGroup --region ${AWS::Region}
 
   WebServerGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
