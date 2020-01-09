@@ -42,11 +42,11 @@ Parameters:
     Default: admin-bastion
     Description: Enter name of pre-generated KeyPair
   WebServerCapacity:
-    Default: '1'
+    Default: '4'
     Description: The initial number of WebServer instances
     Type: Number
-    MinValue: '1'
-    MaxValue: '2'
+    MinValue: '4'
+    MaxValue: '4'
     ConstraintDescription: must be between 1 and 1 EC2 instances.
 
 Mappings:
@@ -395,19 +395,19 @@ Resources:
     Properties:
       VPCZoneIdentifier:  [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]
       LaunchConfigurationName: !Ref WebAppLaunchConfig
-      MinSize: '1'
-      MaxSize: '2'
+      MinSize: '4'
+      MaxSize: '4'
       DesiredCapacity: !Ref WebServerCapacity
       TargetGroupARNs:
         - !Ref ALBTG
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
-        Count: '1'
+        Count: '4'
     UpdatePolicy:
       AutoScalingRollingUpdate:
         MinInstancesInService: '1'
-        MaxBatchSize: '2'
+        MaxBatchSize: '4'
         PauseTime: PT15M
         WaitOnResourceSignals: 'true'
 
@@ -468,8 +468,8 @@ Outputs:
       Export:
         Name: !Sub ${EnvironmentName}-PRI2-SN
 
-  ALB:
+  ALBDNSName:
       Description: LoadBalancer URL
-      Value: !GetAtt ALB.DNSName
+      Value: !Join [ "", ["http://",!GetAtt ALB.DNSName] ]
       Export:
         Name: !Sub ${EnvironmentName}-ALB
