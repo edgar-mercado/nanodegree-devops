@@ -351,6 +351,15 @@ Resources:
                   path=Resources.LaunchConfig.Metadata.AWS::CloudFormation::Init
                   action=/opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource WebAppLaunchConfig --configsets full_install --region ${AWS::Region}
                   runas=root
+          services:
+            sysvinit:
+              cfn-hup:
+                enabled: 'true'
+                ensureRunning: 'true'
+                files:
+                  - "/etc/cfn/cfn-hup.conf"
+                  - "/etc/cfn/hooks.d/cfn-auto-reloader.conf"
+
       Properties:
         ImageId: !Ref ImageId
         IamInstanceProfile: !Ref ProfileWithRolesForOurApp
